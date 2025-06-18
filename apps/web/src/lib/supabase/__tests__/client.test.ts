@@ -7,8 +7,8 @@ vi.mock('@supabase/ssr', () => ({
 }))
 
 describe('Supabase client', () => {
-  it('should create client with correct configuration', () => {
-    const { createBrowserClient } = require('@supabase/ssr')
+  it('should create client with correct configuration', async () => {
+    const { createBrowserClient } = await import('@supabase/ssr')
     
     // Mock environment variables
     process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://test.supabase.co'

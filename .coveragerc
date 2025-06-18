@@ -1,0 +1,11 @@
+[run]
+omit = 
+    */node_modules/*
+    */coverage/*
+    */.next/*
+    */dist/*
+    */e2e/*
+    */test/*
+    */mocks/*
+    *.config.*
+    *.d.ts
