@@ -40,7 +40,7 @@ describe('updateSession middleware', () => {
       },
     }
     
-    vi.mocked(createServerClient).mockReturnValue(mockSupabase as any)
+    vi.mocked(createServerClient).mockReturnValue(mockSupabase as unknown as ReturnType<typeof createServerClient>)
     
     const request = new NextRequest('http://localhost:3000/protected', {
       method: 'GET',
@@ -67,7 +67,7 @@ describe('updateSession middleware', () => {
       },
     }
     
-    vi.mocked(createServerClient).mockReturnValue(mockSupabase as any)
+    vi.mocked(createServerClient).mockReturnValue(mockSupabase as unknown as ReturnType<typeof createServerClient>)
     
     const request = new NextRequest('http://localhost:3000/protected', {
       method: 'GET',
@@ -89,7 +89,7 @@ describe('updateSession middleware', () => {
       },
     }
     
-    vi.mocked(createServerClient).mockReturnValue(mockSupabase as any)
+    vi.mocked(createServerClient).mockReturnValue(mockSupabase as unknown as ReturnType<typeof createServerClient>)
     
     const request = new NextRequest('http://localhost:3000/auth/login', {
       method: 'GET',
