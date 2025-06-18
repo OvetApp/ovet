@@ -20,6 +20,14 @@ pnpm typecheck    # TypeScript validation
 pnpm lint:fix     # Auto-fix ESLint issues
 ```
 
+**Testing:**
+```bash
+pnpm test         # Run all unit tests
+pnpm test:coverage # Run tests with coverage
+pnpm test:ui      # Run tests with UI
+pnpm test:e2e     # Run E2E tests with Playwright
+```
+
 ## Architecture Overview
 
 This is a **Turborepo monorepo** with pnpm workspaces containing:
@@ -69,3 +77,10 @@ Authentication flow: middleware checks user → redirects unauthenticated users 
 - All packages follow `@workspace/[name]` naming
 - Shared configs in dedicated packages
 - Turborepo handles build optimization and caching
+
+## Development Workflow
+
+**Issue Resolution:**
+- When solving GitHub issues, always create a pull request
+- Include issue number in PR title and description
+- Use conventional commit messages with issue references
