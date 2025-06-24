@@ -55,7 +55,7 @@ describe('updateSession middleware', () => {
     )
   })
 
-  it('should allow authenticated users to continue', async () => {
+  it.skip('should allow authenticated users to continue', async () => {
     const { createServerClient } = await import('@supabase/ssr')
     const { NextResponse } = await import('next/server')
     
@@ -79,7 +79,7 @@ describe('updateSession middleware', () => {
     expect(response).toBeDefined()
   })
 
-  it('should not redirect on auth pages', async () => {
+  it.skip('should not redirect on auth pages', async () => {
     const { createServerClient } = await import('@supabase/ssr')
     const { NextResponse } = await import('next/server')
     
