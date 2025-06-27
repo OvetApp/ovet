@@ -35,7 +35,7 @@ A production-ready, modern full-stack application built with Next.js 15, Supabas
 ```
 
 
-### Installation
+## 🚀 Quick Start
 
 1. **Clone and install dependencies:**
    ```bash
@@ -63,7 +63,6 @@ A production-ready, modern full-stack application built with Next.js 15, Supabas
 
 - **[📚 Documentation Index](./docs/)** - Complete documentation overview
 - **[🔐 Authentication Guide](./docs/auth/)** - Supabase auth implementation
-- **[🏗️ Architecture Diagrams](./docs/architecture/diagrams.md)** - Visual system overview
 - **[🛠️ Development Guides](./docs/development/)** - Setup and contribution guides
 
 ## 🏗️ Tech Stack
@@ -85,14 +84,9 @@ A production-ready, modern full-stack application built with Next.js 15, Supabas
 
 ### Adding Components
 
-
-```bash
-```
-
 Components are automatically placed in `packages/ui/src/components/` and shared across the monorepo.
 
 ### Importing Components
-
 Use components from the shared UI package:
 
 ```tsx
