@@ -78,9 +78,92 @@ Authentication flow: middleware checks user → redirects unauthenticated users 
 - Shared configs in dedicated packages
 - Turborepo handles build optimization and caching
 
+## Code Style Guidelines
+
+**Naming Conventions:**
+- Components: PascalCase with descriptive names (e.g., `LoginForm`, `SignUpForm`)
+- Files: kebab-case for components (e.g., `login-form.tsx`, `sign-up-form.tsx`)
+- Functions: camelCase with descriptive verbs (e.g., `handleLogin`, `createClient`)
+- Types/Interfaces: PascalCase (follows TypeScript conventions)
+
+**Component Patterns:**
+- Use `'use client'` directive for client components at top of file
+- Destructure props with `React.ComponentPropsWithoutRef<'element'>`
+- Handle loading states with boolean flags (`isLoading`)
+- Use consistent error handling with try/catch blocks
+- Prefer controlled components with React state
+
+**Import Organization:**
+1. React and Next.js imports first
+2. Third-party libraries  
+3. Workspace packages (`@workspace/ui/...`)
+4. Local imports (`@/...`)
+5. Relative imports (`./`, `../`)
+
+**ESLint Configuration:**
+- Uses `@workspace/eslint-config` with TypeScript, Prettier, and Turbo rules
+- Only warnings enabled (no build-breaking errors)
+- Turbo environment variable validation
+- Auto-formatting with Prettier
+
+## Environment Setup
+
+**Prerequisites:**
+- Node.js ≥20
+- pnpm 10.4.1 (specified in packageManager)
+- Git for version control
+
+**First-time Setup:**
+```bash
+# Install dependencies
+pnpm install
+
+# Set up environment variables
+cp apps/web/.env.example apps/web/.env  # if exists
+# Edit .env with your Supabase credentials
+```
+
+**Supabase Configuration:**
+Required environment variables in `apps/web/.env`:
+```bash
+NEXT_PUBLIC_SUPABASE_URL="your-supabase-url"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
+```
+
+**Development Commands:**
+```bash
+pnpm dev          # Starts all dev servers with Turbo
+pnpm build        # Builds all packages and apps
+pnpm lint         # Runs ESLint with auto-fix
+pnpm format       # Formats code with Prettier
+```
+
+## Workflow Optimization
+
+**Claude Code Integration:**
+- Use `@claude` in GitHub issues and PR comments to trigger automation
+- Claude has access to full codebase context via CLAUDE.md
+- Workflow configured for issue resolution and code review
+
+**Custom Slash Commands:** (Suggested)
+```bash
+/setup     # Run full environment setup
+/test-all  # Run complete test suite
+/type-check # TypeScript validation across workspaces
+/deploy    # Build and deploy pipeline
+```
+
+**Tool Permissions:** (Recommended)
+- `Bash(pnpm install)` - Dependency management
+- `Bash(pnpm run build)` - Build process
+- `Bash(pnpm run test*)` - All test commands
+- `Bash(pnpm run lint*)` - Linting and formatting
+
 ## Development Workflow
 
 **Issue Resolution:**
 - When solving GitHub issues, always create a pull request
 - Include issue number in PR title and description
 - Use conventional commit messages with issue references
+- Run `pnpm lint` and `pnpm typecheck` before committing
+- Ensure all tests pass with `pnpm test`
