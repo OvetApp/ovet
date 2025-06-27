@@ -48,7 +48,7 @@ export default function WelcomePage() {
             </div>
             <CardTitle className="text-2xl">Welcome to Ovet!</CardTitle>
             <CardDescription className="text-base">
-              Hi {user?.email ? user.email.split('@')[0] : 'there'}! Let's get you set up.
+              Hi {user?.email ? user.email.split('@')[0] : 'there'}! Let&apos;s get you set up.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">

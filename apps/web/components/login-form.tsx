@@ -14,10 +14,10 @@ import { Input } from '@workspace/ui/components/input'
 import { Label } from '@workspace/ui/components/label'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { AlertCircle, Loader2 } from 'lucide-react'
 
-export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+function LoginFormContent({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -210,5 +210,27 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+  return (
+    <Suspense fallback={
+      <div className={cn('flex flex-col gap-6', className)} {...props}>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Sign In</CardTitle>
+            <CardDescription>Loading...</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-center">
+              <Loader2 className="h-6 w-6 animate-spin" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    }>
+      <LoginFormContent className={className} {...props} />
+    </Suspense>
   )
 }

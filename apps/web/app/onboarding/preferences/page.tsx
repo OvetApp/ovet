@@ -61,7 +61,7 @@ export default function PreferencesPage() {
             </div>
             <CardTitle className="text-2xl">Set Your Preferences</CardTitle>
             <CardDescription>
-              Choose how you'd like to stay informed and engaged
+              Choose how you&apos;d like to stay informed and engaged
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
