@@ -19,6 +19,11 @@ describe('Supabase server client', () => {
     const mockCookieStore = {
       getAll: vi.fn().mockReturnValue([]),
       set: vi.fn(),
+      get: vi.fn(),
+      has: vi.fn(),
+      delete: vi.fn(),
+      [Symbol.iterator]: vi.fn(),
+      size: 0,
     }
     
     vi.mocked(cookies).mockResolvedValue(mockCookieStore)
@@ -48,6 +53,11 @@ describe('Supabase server client', () => {
     const mockCookieStore = {
       getAll: vi.fn().mockReturnValue([{ name: 'test', value: 'value' }]),
       set: vi.fn(),
+      get: vi.fn(),
+      has: vi.fn(),
+      delete: vi.fn(),
+      [Symbol.iterator]: vi.fn(),
+      size: 0,
     }
     
     vi.mocked(cookies).mockResolvedValue(mockCookieStore)
@@ -61,7 +71,7 @@ describe('Supabase server client', () => {
     await createClient()
     
     // Get the cookie configuration that was passed to createServerClient
-    const cookieConfig = vi.mocked(createServerClient).mock.calls[0][2]
+    const cookieConfig = vi.mocked(createServerClient).mock.calls[0]?.[2]
     
     // Test getAll - the wrapper function should call the mock and return its result
     const cookies_result = cookieConfig?.cookies?.getAll()
@@ -69,7 +79,7 @@ describe('Supabase server client', () => {
     expect(mockCookieStore.getAll).toHaveBeenCalled()
     
     // Test setAll - the wrapper function should call set for each cookie
-    cookieConfig?.cookies?.setAll([
+    cookieConfig?.cookies?.setAll?.([
       { name: 'new-cookie', value: 'new-value', options: {} },
     ])
     expect(mockCookieStore.set).toHaveBeenCalledWith('new-cookie', 'new-value', {})
