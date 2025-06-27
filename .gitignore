@@ -1,5 +1,23 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# .claude, will be available eventually 
+.claude/
+
+# mcp.json
+.mcp.json
+
+# Environment variables
+.env
+.env.local
+.docker.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Supabase
+.supabase/.branches/**
+.supabase/.temp/**
+
 # Dependencies
 node_modules
 .pnp
@@ -34,6 +52,7 @@ npm-debug.log*
 # Misc
 .DS_Store
 *.pem
+supabase/.temp/
 
 # IDE
 .vscode
