@@ -34,20 +34,22 @@ A production-ready, modern full-stack application built with Next.js 15, Supabas
 └── CLAUDE.md         # Claude Code automation workflows
 ```
 
-
 ## 🚀 Quick Start
 
 1. **Clone and install dependencies:**
+
    ```bash
    pnpm install
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    cp apps/web/.env.example apps/web/.env
    ```
-   
+
    Add your Supabase credentials:
+
    ```env
    NEXT_PUBLIC_SUPABASE_URL="your-project-url"
    NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
@@ -67,18 +69,18 @@ A production-ready, modern full-stack application built with Next.js 15, Supabas
 
 ## 🏗️ Tech Stack
 
-| Category | Technology | Purpose |
-|----------|------------|----------|
-| **Framework** | Next.js 15 | React framework with App Router |
-| **Runtime** | React 19 | Latest React with concurrent features |
-| **Language** | TypeScript 5.7 | Type safety and developer experience |
-| **Database** | Supabase | PostgreSQL with real-time features |
-| **Authentication** | Supabase Auth | Complete auth solution with RLS |
-| **Styling** | Tailwind CSS v4 | Utility-first CSS framework |
-| **Components** | shadcn/ui | Accessible component library |
-| **Icons** | Lucide React | Modern icon library |
-| **Monorepo** | Turborepo | Build optimization and caching |
-| **Package Manager** | pnpm 10.4+ | Fast, efficient package management |
+| Category            | Technology      | Purpose                               |
+| ------------------- | --------------- | ------------------------------------- |
+| **Framework**       | Next.js 15      | React framework with App Router       |
+| **Runtime**         | React 19        | Latest React with concurrent features |
+| **Language**        | TypeScript 5.7  | Type safety and developer experience  |
+| **Database**        | Supabase        | PostgreSQL with real-time features    |
+| **Authentication**  | Supabase Auth   | Complete auth solution with RLS       |
+| **Styling**         | Tailwind CSS v4 | Utility-first CSS framework           |
+| **Components**      | shadcn/ui       | Accessible component library          |
+| **Icons**           | Lucide React    | Modern icon library                   |
+| **Monorepo**        | Turborepo       | Build optimization and caching        |
+| **Package Manager** | pnpm 10.4+      | Fast, efficient package management    |
 
 ## 🧩 Using Components
 
@@ -87,12 +89,13 @@ A production-ready, modern full-stack application built with Next.js 15, Supabas
 Components are automatically placed in `packages/ui/src/components/` and shared across the monorepo.
 
 ### Importing Components
+
 Use components from the shared UI package:
 
 ```tsx
-import { Button } from "@workspace/ui/components/button"
-import { Card } from "@workspace/ui/components/card"
-import { Dialog } from "@workspace/ui/components/dialog"
+import { Button } from "@workspace/ui/components/button";
+import { Card } from "@workspace/ui/components/card";
+import { Dialog } from "@workspace/ui/components/dialog";
 ```
 
 ## 🔧 Development Commands
@@ -101,7 +104,7 @@ import { Dialog } from "@workspace/ui/components/dialog"
 # Development
 pnpm dev          # Start all development servers
 pnpm build        # Build all apps and packages
-pnpm lint         # Run ESLint across workspaces  
+pnpm lint         # Run ESLint across workspaces
 pnpm format       # Format code with Prettier
 
 # Testing
@@ -126,10 +129,11 @@ This monorepo follows modern best practices:
 - **SSR authentication** with Supabase
 
 ### Vercel
+
 1. **WebApp Deployement (for now)**
-	i. apps/web --> one vercel project
-	ii. apps/tools (later, as an exemple here) --> one vercel project
-2. **Set environment variables** in vercel dashboard (for now) 
+   i. apps/web --> one vercel project
+   ii. apps/tools (later, as an exemple here) --> one vercel project
+2. **Set environment variables** in vercel dashboard (for now)
 3. **Deploy** - automatic builds on push to main
 
 See [architecture diagrams](./docs/architecture/diagrams.md) for visual representations.
@@ -161,6 +165,7 @@ Learn more in the [authentication documentation](./docs/auth/).
 The project includes comprehensive testing setup:
 
 ### Unit & Integration Tests
+
 ```bash
 pnpm test              # Run all tests
 pnpm test:coverage     # Run with coverage report
@@ -168,11 +173,13 @@ pnpm test:ui           # Run with Vitest UI
 ```
 
 ### End-to-End Tests
+
 ```bash
 pnpm test:e2e          # Run Playwright tests
 ```
 
 ### Test Structure
+
 - **Unit Tests**: Component and utility function tests
 - **Integration Tests**: API routes and database operations
 - **E2E Tests**: Complete user flows and authentication
@@ -197,7 +204,6 @@ pnpm test:e2e          # Run Playwright tests
 
 ## 🚀 Deployment
 
-
 ### Code Standards
 
 - Follow TypeScript best practices
@@ -205,7 +211,6 @@ pnpm test:e2e          # Run Playwright tests
 - Update documentation as needed
 - Follow conventional commit messages
 - Ensure all tests pass
-
 
 ## 📄 License
 
@@ -229,5 +234,3 @@ This project is licensed under the [MIT License](./LICENSE).
 - [shadcn/ui](https://ui.shadcn.com/) for beautiful components
 - [Tailwind CSS](https://tailwindcss.com/) for utility-first styling
 - [Vercel](https://vercel.com/) for seamless deployment
-
-
