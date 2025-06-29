@@ -145,15 +145,21 @@ pnpm format       # Formats code with Prettier
 - Claude has access to full codebase context via CLAUDE.md
 - Workflow configured for issue resolution and code review
 
-**Custom Slash Commands:** (Suggested)
+**Custom Slash Commands:**
 ```bash
-/setup     # Run full environment setup
-/test-all  # Run complete test suite
-/type-check # TypeScript validation across workspaces
-/deploy    # Build and deploy pipeline
+/nextjs [topic]    # Get Next.js docs: /nextjs routing
+/react [topic]     # Get React docs: /react hooks  
+/supabase [topic]  # Get Supabase docs: /supabase auth
+/tailwind [topic]  # Get Tailwind docs: /tailwind flexbox
+/playwright [topic] # Get Playwright docs: /playwright testing
 ```
 
-**Tool Permissions:** (Recommended)
+**Tool Permissions:**
+- `Context7(/vercel/next.js)` - Next.js documentation access
+- `Context7(/facebook/react)` - React documentation access
+- `Context7(/supabase/supabase)` - Supabase documentation access
+- `Context7(/tailwindlabs/tailwindcss)` - Tailwind CSS documentation access
+- `Context7(/microsoft/playwright)` - Playwright documentation access
 - `Bash(pnpm install)` - Dependency management
 - `Bash(pnpm run build)` - Build process
 - `Bash(pnpm run test*)` - All test commands
