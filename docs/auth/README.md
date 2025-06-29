@@ -18,7 +18,7 @@ This document outlines the enhanced authentication system architecture for the O
 ```
 /auth
 ├── /login                    # Sign in page
-├── /sign-up                  # Registration page  
+├── /sign-up                  # Registration page
 ├── /forgot-password          # Password reset request
 ├── /update-password          # Password reset form
 ├── /sign-up-success         # Post-registration confirmation
@@ -42,7 +42,7 @@ This document outlines the enhanced authentication system architecture for the O
 ```
 /auth
 ├── /login                    # Sign in page
-├── /signup                   # Registration page  
+├── /signup                   # Registration page
 ├── /forgot-password          # Password reset request
 ├── /reset-password           # Password reset form (from email)
 ├── /verify-email            # Email verification page
@@ -73,29 +73,29 @@ This document outlines the enhanced authentication system architecture for the O
 ```mermaid
 graph TB
     A[User Request] --> B{Authenticated?}
-    
+
     B -->|No| C{Auth Route?}
     B -->|Yes| D{Onboarding Complete?}
-    
+
     C -->|Yes| E[Allow Access to Auth Pages]
     C -->|No| F[Redirect to /auth/login]
-    
+
     D -->|No| G[Redirect to /onboarding]
     D -->|Yes| H{Requested Protected Route?}
-    
+
     H -->|Yes| I[Allow Access]
     H -->|No| J[Redirect to /dashboard]
-    
+
     E --> K[Render Auth Page]
     F --> K
     G --> L[Render Onboarding]
     I --> M[Render Protected Page]
     J --> N[Render Dashboard]
-    
+
     K --> O{Auth Success?}
     O -->|Yes| P[Post-Auth Redirect]
     O -->|No| K
-    
+
     P --> Q{Has Redirect URL?}
     Q -->|Yes| R[Redirect to Stored URL]
     Q -->|No| G
@@ -108,25 +108,25 @@ flowchart TD
     A[Request Received] --> B[Initialize Supabase Client]
     B --> C[Get User Session]
     C --> D{User Authenticated?}
-    
+
     D -->|No| E{Is Auth Route?}
     D -->|Yes| F{Is Auth Route?}
-    
+
     E -->|Yes| G[Allow - Render Auth Page]
     E -->|No| H[Redirect to /auth/login]
-    
+
     F -->|Yes| I{Is Login/Signup?}
     F -->|No| J{Onboarding Complete?}
-    
+
     I -->|Yes| K[Redirect to /dashboard]
     I -->|No| L[Allow - Auth Action]
-    
+
     J -->|No| M[Redirect to /onboarding]
     J -->|Yes| N[Allow - Protected Route]
-    
+
     H --> O[Store Redirect URL]
     O --> P[Show Login Page]
-    
+
     G --> Q[Render Page]
     L --> Q
     N --> Q
@@ -138,22 +138,26 @@ flowchart TD
 ## Implementation Plan
 
 ### Phase 1: Enhanced Middleware
+
 - [ ] Implement redirect URL storage
 - [ ] Add onboarding status detection
 - [ ] Enhance route matching logic
 
 ### Phase 2: Dashboard Structure
+
 - [ ] Create dashboard layout
 - [ ] Implement navigation components
 - [ ] Add profile and settings pages
 
 ### Phase 3: Onboarding Flow
+
 - [ ] Welcome page implementation
 - [ ] Profile setup forms
 - [ ] Preferences configuration
 - [ ] Progress tracking
 
 ### Phase 4: Advanced Features
+
 - [ ] OAuth provider integration
 - [ ] Email verification flow
 - [ ] Session management improvements
@@ -162,12 +166,14 @@ flowchart TD
 ## Security Considerations
 
 ### Current Protections
+
 - Server-side session validation
 - CSRF protection via Supabase
 - Secure cookie handling
 - Route-level access control
 
 ### Planned Enhancements
+
 - Rate limiting on auth endpoints
 - Password strength validation
 - Account lockout mechanisms
@@ -176,28 +182,32 @@ flowchart TD
 ## Configuration
 
 ### Environment Variables
+
 ```bash
 NEXT_PUBLIC_SUPABASE_URL="your-supabase-url"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
 ```
 
 ### Middleware Configuration
+
 ```typescript
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
-}
+};
 ```
 
 ## Testing Strategy
 
 ### Current Tests
+
 - Unit tests for Supabase clients
 - E2E tests for auth flows
 - Component tests for forms
 
 ### Planned Tests
+
 - Middleware functionality
 - Redirect behavior
 - Onboarding flows
@@ -206,12 +216,14 @@ export const config = {
 ## Deployment Considerations
 
 ### Supabase Configuration
+
 - Auth provider settings
 - Email templates
 - Redirect URLs
 - Security policies
 
 ### Next.js Configuration
+
 - Environment variables
 - Middleware optimization
 - Static/dynamic routes

@@ -5,11 +5,12 @@ Welcome to the Ovet project documentation. This directory contains comprehensive
 ## 📚 Documentation Structure
 
 ### [🔐 Authentication](./auth/)
+
 - Authentication implementation with [Supabase](https://supabase.com/ui/docs/nextjs/password-based-auth)
 - SSR setup and middleware configuration
 
-
 ### [🛠️ Development](./development/)
+
 - Setup and installation guides
 - Testing strategies and tools
 - Deployment workflows
@@ -31,6 +32,7 @@ Welcome to the Ovet project documentation. This directory contains comprehensive
 ## 🎯 Documentation Goals
 
 This documentation aims to:
+
 - Provide clear setup and development guides
 - Visualize system architecture and data flows
 - Document authentication and security patterns
@@ -40,6 +42,7 @@ This documentation aims to:
 ## 🤝 Contributing to Documentation
 
 Documentation follows the same workflow as code:
+
 1. Create a branch for documentation changes
 2. Update relevant markdown files
 3. Test any code examples
