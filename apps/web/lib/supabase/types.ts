@@ -1,1 +1,7 @@
-export type { Database, Tables, TablesInsert, TablesUpdate, Enums } from '@/supabase/types'
+export type {
+  Database,
+  Tables,
+  TablesInsert,
+  TablesUpdate,
+  Enums,
+} from "@/supabase/types";

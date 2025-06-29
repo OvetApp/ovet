@@ -5,12 +5,14 @@ Automated ticket creation system for the Ovet Web App with smart defaults and co
 ## Quick Usage
 
 ### Basic Syntax
+
 ```
 Create ticket: [vague title]
 Create ticket: [vague title] | [optional description]
 ```
 
 ### Examples
+
 ```bash
 # Simple title - description auto-generated
 "Create ticket: fix login bug"
@@ -25,6 +27,7 @@ Create ticket: [vague title] | [optional description]
 ## Framework Details
 
 ### Smart Defaults
+
 - **Team**: Web App (`cf38dffe-55b9-4ce3-a057-b7d33f9b492d`)
 - **Project**: Ovet Web Migration to Monorepo (`b4631f12-d0f4-409b-a3e6-b00854dcc508`)
 - **Priority**: 3 (Medium)
@@ -33,22 +36,26 @@ Create ticket: [vague title] | [optional description]
 ### Context-Aware Enhancement
 
 #### Title Improvement
+
 The system enhances vague titles using project context:
 
-| Input | Enhanced Output |
-|-------|----------------|
-| "fix login bug" | "Fix authentication login validation bug" |
-| "improve nav" | "Improve navigation UX flow" |
-| "add dark mode" | "Add dark mode theme switching" |
+| Input               | Enhanced Output                           |
+| ------------------- | ----------------------------------------- |
+| "fix login bug"     | "Fix authentication login validation bug" |
+| "improve nav"       | "Improve navigation UX flow"              |
+| "add dark mode"     | "Add dark mode theme switching"           |
 | "performance issue" | "Fix performance bottleneck in page load" |
 
 #### Description Generation
+
 When no description provided, generates based on:
+
 - **Current tech stack** (Next.js 15, Supabase, shadcn/ui)
 - **Architecture patterns** (App Router, middleware, SSR)
 - **Project requirements** (monorepo migration, auth enhancement)
 
 **Auto-generated sections:**
+
 - **Context** - Technical background
 - **Acceptance Criteria** - Testable requirements
 - **Technical Notes** - Implementation guidance
@@ -58,25 +65,29 @@ When no description provided, generates based on:
 **Input:** `"fix navigation"`
 
 **Generated:**
+
 ```markdown
 Title: Fix navigation routing and UX flow
 
 Description:
-Based on the monorepo architecture, fix navigation issues and enhance 
+Based on the monorepo architecture, fix navigation issues and enhance
 user experience for smoother transitions between app states.
 
 **Context:**
+
 - Current monorepo setup with Next.js 15 App Router
 - Supabase authentication with middleware protection
 - Need better UX for incoming users per project requirements
 
 **Acceptance Criteria:**
+
 - [ ] Fix navigation routing issues
 - [ ] Smooth transitions between auth states
 - [ ] Consistent navigation patterns
 - [ ] Mobile-responsive navigation
 
 **Technical Notes:**
+
 - Use existing middleware.ts patterns
 - Leverage App Router capabilities
 - Follow current component conventions
@@ -85,6 +96,7 @@ user experience for smoother transitions between app states.
 ## Advanced Usage
 
 ### Custom Priority
+
 ```bash
 # High priority ticket
 "Create urgent ticket: critical auth bug | Users can't log in"
@@ -94,12 +106,14 @@ user experience for smoother transitions between app states.
 ```
 
 ### Specific Project Assignment
+
 ```bash
 # Different project (if needed)
 "Create ticket for billing: payment flow | Stripe integration issues"
 ```
 
 ### Team Assignment
+
 ```bash
 # Assign to different team
 "Create iOS ticket: sync with web | Native app parity"
@@ -108,26 +122,29 @@ user experience for smoother transitions between app states.
 ## Technical Implementation
 
 ### Core Function
+
 ```typescript
 async function createSmartTicket(
-  title: string, 
-  description?: string
+  title: string,
+  description?: string,
 ): Promise<LinearTicket> {
   const enhancedTitle = enhanceTitle(title);
   const enhancedDescription = description || generateDescription(title);
-  
+
   return await createLinearIssue({
     title: enhancedTitle,
     description: enhancedDescription,
     teamId: WEB_APP_TEAM_ID,
     projectId: MONOREPO_PROJECT_ID,
-    priority: 3
+    priority: 3,
   });
 }
 ```
 
 ### Context Enhancement Engine
+
 The system uses:
+
 - **Project knowledge** from CLAUDE.md and docs/
 - **Architecture patterns** from codebase structure
 - **Current requirements** from project description
@@ -136,11 +153,12 @@ The system uses:
 ## Usage Examples
 
 ### Development Workflow
+
 ```bash
 # During code review
 "Create ticket: refactor auth components | Too much duplication in forms"
 
-# Bug found during testing  
+# Bug found during testing
 "Create ticket: middleware redirect loop | Users stuck in auth flow"
 
 # Feature request from user feedback
@@ -148,6 +166,7 @@ The system uses:
 ```
 
 ### Project Management
+
 ```bash
 # Planning session
 "Create ticket: audit component library | Check shadcn/ui coverage"
@@ -159,6 +178,7 @@ The system uses:
 ## Integration with CLAUDE.md
 
 Add to your workflow commands:
+
 ```bash
 # Custom Slash Commands
 /ticket [title] | [description]  # Create smart Linear ticket
@@ -169,11 +189,13 @@ Add to your workflow commands:
 ## Ticket Templates
 
 ### Bug Report Template
+
 ```markdown
 **Bug Description:**
 [Auto-generated based on title]
 
 **Steps to Reproduce:**
+
 1. [Inferred from context]
 2. Navigate to affected area
 3. Observe issue
@@ -185,12 +207,14 @@ Add to your workflow commands:
 [Issue description]
 
 **Environment:**
+
 - Next.js 15 App Router
 - Supabase Auth
 - [Browser/Device if specified]
 ```
 
 ### Feature Request Template
+
 ```markdown
 **Feature Description:**
 [Enhanced based on title and context]
@@ -199,12 +223,14 @@ Add to your workflow commands:
 As a [user type], I want [feature] so that [benefit]
 
 **Acceptance Criteria:**
+
 - [ ] [Generated checklist]
 - [ ] Mobile responsive
 - [ ] Accessible design
 - [ ] Error handling
 
 **Technical Considerations:**
+
 - Follow existing patterns
 - Use shadcn/ui components
 - Maintain TypeScript safety
@@ -213,17 +239,20 @@ As a [user type], I want [feature] so that [benefit]
 ## Best Practices
 
 ### Effective Titles
+
 - **Be specific**: "login validation" vs "auth issue"
 - **Include context**: "mobile navigation" vs "navigation"
 - **Action-oriented**: "fix", "add", "improve", "refactor"
 
 ### Useful Descriptions
+
 - **Provide context** even if brief
 - **Mention user impact** when relevant
 - **Include technical constraints** if any
 - **Reference related work** if applicable
 
 ### Workflow Integration
+
 1. **During development** - Create tickets for discovered issues
 2. **Code reviews** - Generate tickets for refactoring needs
 3. **User feedback** - Convert feedback to actionable tickets
