@@ -272,6 +272,56 @@ test.describe("Enhanced Authentication System", () => {
     });
   });
 
+  test.describe("Authenticated User Redirects", () => {
+    test("should redirect authenticated users from forgot-password to dashboard", async ({ page }) => {
+      // Mock authentication state by setting up cookies/localStorage
+      // This simulates an authenticated user
+      await page.addInitScript(() => {
+        // Mock localStorage to simulate authenticated state
+        localStorage.setItem('supabase.auth.token', JSON.stringify({
+          access_token: 'mock-token',
+          refresh_token: 'mock-refresh',
+          user: { id: 'test-user' }
+        }));
+      });
+      
+      // Set mock cookies to simulate Supabase auth
+      await page.context().addCookies([
+        {
+          name: 'sb-auth-token',
+          value: 'mock-auth-token',
+          domain: 'localhost',
+          path: '/'
+        }
+      ]);
+
+      // Try to visit forgot-password page as authenticated user
+      await page.goto("/auth/forgot-password");
+
+      // Should be redirected to dashboard
+      await page.waitForURL("/dashboard");
+      expect(page.url()).toContain("/dashboard");
+    });
+
+    test("should allow unauthenticated users to access forgot-password page", async ({ page }) => {
+      // Clear any existing auth state
+      await page.context().clearCookies();
+      await page.addInitScript(() => {
+        localStorage.clear();
+      });
+
+      // Visit forgot-password page as unauthenticated user
+      await page.goto("/auth/forgot-password");
+
+      // Should stay on forgot-password page
+      expect(page.url()).toContain("/auth/forgot-password");
+      await expect(page.getByRole("textbox", { name: /email/i })).toBeVisible();
+      await expect(
+        page.getByRole("button", { name: /reset password/i })
+      ).toBeVisible();
+    });
+  });
+
   test.describe("Mobile Responsiveness", () => {
     test("should display properly on mobile devices", async ({ page }) => {
       await page.setViewportSize({ width: 375, height: 667 });
