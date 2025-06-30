@@ -1,4 +1,4 @@
-import { UpdatePasswordForm } from '@/components/update-password-form'
+import { UpdatePasswordForm } from "@/components/update-password-form";
 
 export default function ResetPasswordPage() {
   return (
@@ -7,5 +7,5 @@ export default function ResetPasswordPage() {
         <UpdatePasswordForm />
       </div>
     </div>
-  )
+  );
 }

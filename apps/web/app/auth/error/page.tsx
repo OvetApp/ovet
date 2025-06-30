@@ -1,10 +1,20 @@
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@workspace/ui/components/card'
-import { Button } from '@workspace/ui/components/button'
-import { AlertCircle } from 'lucide-react'
+import Link from "next/link";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@workspace/ui/components/card";
+import { Button } from "@workspace/ui/components/button";
+import { AlertCircle } from "lucide-react";
 
-export default async function AuthErrorPage({ searchParams }: { searchParams: Promise<{ error: string }> }) {
-  const params = await searchParams
+export default async function AuthErrorPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error: string }>;
+}) {
+  const params = await searchParams;
 
   return (
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
@@ -26,21 +36,19 @@ export default async function AuthErrorPage({ searchParams }: { searchParams: Pr
               </div>
             ) : (
               <div className="rounded-lg bg-gray-50 p-3">
-                <p className="text-sm text-gray-600">An unspecified error occurred.</p>
+                <p className="text-sm text-gray-600">
+                  An unspecified error occurred.
+                </p>
               </div>
             )}
-            
+
             <div className="space-y-2">
               <Button asChild className="w-full">
-                <Link href="/auth/login">
-                  Back to Login
-                </Link>
+                <Link href="/auth/login">Back to Login</Link>
               </Button>
-              
+
               <Button asChild variant="outline" className="w-full">
-                <Link href="/">
-                  Go Home
-                </Link>
+                <Link href="/">Go Home</Link>
               </Button>
             </div>
           </CardContent>

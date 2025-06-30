@@ -25,7 +25,8 @@
       "core-js-pure",
       "esbuild",
       "msw",
-      "sharp"
+      "sharp",
+      "supabase"
     ]
   }
 }

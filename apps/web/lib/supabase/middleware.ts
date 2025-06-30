@@ -16,65 +16,80 @@ export async function updateSession(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value),
+            request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
             request,
           });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options),
+            supabaseResponse.cookies.set(name, value, options)
           );
         },
       },
-    },
+    }
   );
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const url = request.nextUrl.clone()
-  const pathname = request.nextUrl.pathname
+  const url = request.nextUrl.clone();
+  const pathname = request.nextUrl.pathname;
 
   // Define route patterns
-  const authRoutes = ['/auth/login', '/auth/signup', '/auth/forgot-password', '/auth/reset-password', '/auth/verify-email', '/auth/error', '/auth/callback']
-  const publicRoutes = ['/', ...authRoutes]
-  const protectedRoutes = ['/dashboard', '/onboarding', '/protected']
-  const logoutRoute = '/auth/logout'
-  
+  const authRoutes = [
+    "/auth/login",
+    "/auth/signup",
+    "/auth/forgot-password",
+    "/auth/reset-password",
+    "/auth/verify-email",
+    "/auth/error",
+    "/auth/callback",
+  ];
+  const publicRoutes = ["/", ...authRoutes];
+  const protectedRoutes = ["/dashboard", "/onboarding", "/protected"];
+  const logoutRoute = "/auth/logout";
+
   // Handle logout
   if (pathname === logoutRoute) {
-    url.pathname = '/auth/login'
-    const response = NextResponse.redirect(url)
-    supabaseResponse.cookies.getAll().forEach(cookie => {
-      response.cookies.set(cookie.name, cookie.value, cookie)
-    })
-    return response
+    url.pathname = "/auth/login";
+    const response = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((cookie) => {
+      response.cookies.set(cookie.name, cookie.value, cookie);
+    });
+    return response;
   }
 
-  // Check if current path is an auth route (login/signup specifically)
-  const isLoginOrSignupPage = pathname === '/auth/login' || pathname === '/auth/signup'
-  
+  // Check if current path is an auth route that should redirect when authenticated
+  const isAuthPageThatShouldRedirect =
+    pathname === "/auth/login" || 
+    pathname === "/auth/signup" || 
+    pathname === "/auth/forgot-password";
+
   // Check if current path is a protected route
-  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
-  
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
   // Check if current path is a public route
-  const isPublicRoute = publicRoutes.some(route => pathname === route || pathname.startsWith(route))
+  const isPublicRoute = publicRoutes.some(
+    (route) => pathname === route || pathname.startsWith(route)
+  );
 
   if (user) {
     // User is authenticated
-    if (isLoginOrSignupPage) {
-      // Redirect authenticated users away from login/signup pages
-      url.pathname = '/dashboard'
-      const response = NextResponse.redirect(url)
-      supabaseResponse.cookies.getAll().forEach(cookie => {
-        response.cookies.set(cookie.name, cookie.value, cookie)
-      })
-      return response
+    if (isAuthPageThatShouldRedirect) {
+      // Redirect authenticated users away from login/signup/forgot-password pages
+      url.pathname = "/dashboard";
+      const response = NextResponse.redirect(url);
+      supabaseResponse.cookies.getAll().forEach((cookie) => {
+        response.cookies.set(cookie.name, cookie.value, cookie);
+      });
+      return response;
     }
-    
+
     // Check if user has completed onboarding for protected routes
-    if (isProtectedRoute && !pathname.startsWith('/onboarding')) {
+    if (isProtectedRoute && !pathname.startsWith("/onboarding")) {
       // For now, assume onboarding is complete - this would be enhanced with user profile checks
       // TODO: Add onboarding completion check from user profile
     }
@@ -82,13 +97,13 @@ export async function updateSession(request: NextRequest) {
     // User is not authenticated
     if (!isPublicRoute) {
       // Store the original URL to redirect back after login
-      url.pathname = '/auth/login'
-      url.searchParams.set('returnUrl', pathname)
-      const response = NextResponse.redirect(url)
-      supabaseResponse.cookies.getAll().forEach(cookie => {
-        response.cookies.set(cookie.name, cookie.value, cookie)
-      })
-      return response
+      url.pathname = "/auth/login";
+      url.searchParams.set("returnUrl", pathname);
+      const response = NextResponse.redirect(url);
+      supabaseResponse.cookies.getAll().forEach((cookie) => {
+        response.cookies.set(cookie.name, cookie.value, cookie);
+      });
+      return response;
     }
   }
 
