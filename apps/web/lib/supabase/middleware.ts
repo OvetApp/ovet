@@ -62,8 +62,8 @@ export async function updateSession(request: NextRequest) {
 
   // Check if current path is an auth route that should redirect when authenticated
   const isAuthPageThatShouldRedirect =
-    pathname === "/auth/login" || 
-    pathname === "/auth/signup" || 
+    pathname === "/auth/login" ||
+    pathname === "/auth/signup" ||
     pathname === "/auth/forgot-password";
 
   // Check if current path is a protected route

@@ -43,7 +43,7 @@ function VerifyEmailHandler() {
         } else {
           setIsVerified(true);
           setTimeout(() => {
-            router.push("/onboarding/welcome");
+            router.push("/onboarding");
           }, 2000);
         }
       } catch {

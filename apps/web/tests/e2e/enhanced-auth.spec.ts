@@ -7,10 +7,10 @@ test.describe("Enhanced Authentication System", () => {
 
       await expect(page.getByRole("textbox", { name: /email/i })).toBeVisible();
       await expect(
-        page.getByRole("textbox", { name: /password/i })
+        page.getByRole("textbox", { name: /password/i }),
       ).toBeVisible();
       await expect(
-        page.getByRole("button", { name: /sign in/i })
+        page.getByRole("button", { name: /sign in/i }),
       ).toBeVisible();
     });
 
@@ -19,10 +19,10 @@ test.describe("Enhanced Authentication System", () => {
 
       await expect(page.getByRole("textbox", { name: /email/i })).toBeVisible();
       await expect(
-        page.getByRole("textbox", { name: /password/i })
+        page.getByRole("textbox", { name: /password/i }),
       ).toBeVisible();
       await expect(
-        page.getByRole("button", { name: /sign up/i })
+        page.getByRole("button", { name: /sign up/i }),
       ).toBeVisible();
     });
 
@@ -33,7 +33,7 @@ test.describe("Enhanced Authentication System", () => {
 
       await expect(page.getByRole("textbox", { name: /email/i })).toBeVisible();
       await expect(
-        page.getByRole("button", { name: /reset password/i })
+        page.getByRole("button", { name: /reset password/i }),
       ).toBeVisible();
     });
 
@@ -43,10 +43,10 @@ test.describe("Enhanced Authentication System", () => {
       await page.goto("/auth/reset-password");
 
       await expect(
-        page.getByRole("textbox", { name: /password/i })
+        page.getByRole("textbox", { name: /password/i }),
       ).toBeVisible();
       await expect(
-        page.getByRole("button", { name: /update password/i })
+        page.getByRole("button", { name: /update password/i }),
       ).toBeVisible();
     });
 
@@ -207,7 +207,7 @@ test.describe("Enhanced Authentication System", () => {
       // Submit form and check for loading state
       await page.getByRole("button", { name: /sign in/i }).click();
       await expect(
-        page.getByRole("button", { name: /signing in/i })
+        page.getByRole("button", { name: /signing in/i }),
       ).toBeVisible();
     });
   });
@@ -251,10 +251,10 @@ test.describe("Enhanced Authentication System", () => {
       await page.goto("/auth/login");
 
       await expect(
-        page.getByRole("textbox", { name: /email/i })
+        page.getByRole("textbox", { name: /email/i }),
       ).toHaveAttribute("aria-label");
       await expect(
-        page.getByRole("textbox", { name: /password/i })
+        page.getByRole("textbox", { name: /password/i }),
       ).toHaveAttribute("aria-label");
     });
 
@@ -267,32 +267,37 @@ test.describe("Enhanced Authentication System", () => {
 
       await page.keyboard.press("Tab");
       await expect(
-        page.getByRole("textbox", { name: /password/i })
+        page.getByRole("textbox", { name: /password/i }),
       ).toBeFocused();
     });
   });
 
   test.describe("Authenticated User Redirects", () => {
-    test("should redirect authenticated users from forgot-password to dashboard", async ({ page }) => {
+    test("should redirect authenticated users from forgot-password to dashboard", async ({
+      page,
+    }) => {
       // Mock authentication state by setting up cookies/localStorage
       // This simulates an authenticated user
       await page.addInitScript(() => {
         // Mock localStorage to simulate authenticated state
-        localStorage.setItem('supabase.auth.token', JSON.stringify({
-          access_token: 'mock-token',
-          refresh_token: 'mock-refresh',
-          user: { id: 'test-user' }
-        }));
+        localStorage.setItem(
+          "supabase.auth.token",
+          JSON.stringify({
+            access_token: "mock-token",
+            refresh_token: "mock-refresh",
+            user: { id: "test-user" },
+          }),
+        );
       });
-      
+
       // Set mock cookies to simulate Supabase auth
       await page.context().addCookies([
         {
-          name: 'sb-auth-token',
-          value: 'mock-auth-token',
-          domain: 'localhost',
-          path: '/'
-        }
+          name: "sb-auth-token",
+          value: "mock-auth-token",
+          domain: "localhost",
+          path: "/",
+        },
       ]);
 
       // Try to visit forgot-password page as authenticated user
@@ -303,7 +308,9 @@ test.describe("Enhanced Authentication System", () => {
       expect(page.url()).toContain("/dashboard");
     });
 
-    test("should allow unauthenticated users to access forgot-password page", async ({ page }) => {
+    test("should allow unauthenticated users to access forgot-password page", async ({
+      page,
+    }) => {
       // Clear any existing auth state
       await page.context().clearCookies();
       await page.addInitScript(() => {
@@ -317,7 +324,7 @@ test.describe("Enhanced Authentication System", () => {
       expect(page.url()).toContain("/auth/forgot-password");
       await expect(page.getByRole("textbox", { name: /email/i })).toBeVisible();
       await expect(
-        page.getByRole("button", { name: /reset password/i })
+        page.getByRole("button", { name: /reset password/i }),
       ).toBeVisible();
     });
   });
@@ -329,10 +336,10 @@ test.describe("Enhanced Authentication System", () => {
 
       await expect(page.getByRole("textbox", { name: /email/i })).toBeVisible();
       await expect(
-        page.getByRole("textbox", { name: /password/i })
+        page.getByRole("textbox", { name: /password/i }),
       ).toBeVisible();
       await expect(
-        page.getByRole("button", { name: /sign in/i })
+        page.getByRole("button", { name: /sign in/i }),
       ).toBeVisible();
     });
   });

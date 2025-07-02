@@ -103,9 +103,12 @@ describe("updateSession middleware", () => {
 
     vi.mocked(createServerClient).mockReturnValue(mockSupabase as any);
 
-    const request = new NextRequest("http://localhost:3000/auth/forgot-password", {
-      method: "GET",
-    });
+    const request = new NextRequest(
+      "http://localhost:3000/auth/forgot-password",
+      {
+        method: "GET",
+      },
+    );
 
     await updateSession(request);
 
@@ -124,9 +127,12 @@ describe("updateSession middleware", () => {
 
     vi.mocked(createServerClient).mockReturnValue(mockSupabase as any);
 
-    const request = new NextRequest("http://localhost:3000/auth/forgot-password", {
-      method: "GET",
-    });
+    const request = new NextRequest(
+      "http://localhost:3000/auth/forgot-password",
+      {
+        method: "GET",
+      },
+    );
 
     const response = await updateSession(request);
 
