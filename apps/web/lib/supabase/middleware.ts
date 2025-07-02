@@ -16,52 +16,96 @@ export async function updateSession(request: NextRequest) {
         },
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value),
+            request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
             request,
           });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options),
+            supabaseResponse.cookies.set(name, value, options)
           );
         },
       },
-    },
+    }
   );
-
-  // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
-  // IMPORTANT: DO NOT REMOVE auth.getUser()
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
+  const url = request.nextUrl.clone();
+  const pathname = request.nextUrl.pathname;
+
+  // Define route patterns
+  const authRoutes = [
+    "/auth/login",
+    "/auth/signup",
+    "/auth/forgot-password",
+    "/auth/reset-password",
+    "/auth/verify-email",
+    "/auth/error",
+    "/auth/callback",
+  ];
+  const publicRoutes = ["/", ...authRoutes];
+  const protectedRoutes = ["/dashboard", "/onboarding", "/protected"];
+  const logoutRoute = "/auth/logout";
+
+  // Handle logout
+  if (pathname === logoutRoute) {
     url.pathname = "/auth/login";
-    return NextResponse.redirect(url);
+    const response = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((cookie) => {
+      response.cookies.set(cookie.name, cookie.value, cookie);
+    });
+    return response;
   }
 
-  // IMPORTANT: You *must* return the supabaseResponse object as it is.
-  // If you're creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
+  // Check if current path is an auth route that should redirect when authenticated
+  const isAuthPageThatShouldRedirect =
+    pathname === "/auth/login" ||
+    pathname === "/auth/signup" ||
+    pathname === "/auth/forgot-password";
+
+  // Check if current path is a protected route
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  // Check if current path is a public route
+  const isPublicRoute = publicRoutes.some(
+    (route) => pathname === route || pathname.startsWith(route)
+  );
+
+  if (user) {
+    // User is authenticated
+    if (isAuthPageThatShouldRedirect) {
+      // Redirect authenticated users away from login/signup/forgot-password pages
+      url.pathname = "/dashboard";
+      const response = NextResponse.redirect(url);
+      supabaseResponse.cookies.getAll().forEach((cookie) => {
+        response.cookies.set(cookie.name, cookie.value, cookie);
+      });
+      return response;
+    }
+
+    // Check if user has completed onboarding for protected routes
+    if (isProtectedRoute && !pathname.startsWith("/onboarding")) {
+      // For now, assume onboarding is complete - this would be enhanced with user profile checks
+      // TODO: Add onboarding completion check from user profile
+    }
+  } else {
+    // User is not authenticated
+    if (!isPublicRoute) {
+      // Store the original URL to redirect back after login
+      url.pathname = "/auth/login";
+      url.searchParams.set("returnUrl", pathname);
+      const response = NextResponse.redirect(url);
+      supabaseResponse.cookies.getAll().forEach((cookie) => {
+        response.cookies.set(cookie.name, cookie.value, cookie);
+      });
+      return response;
+    }
+  }
 
   return supabaseResponse;
 }

@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+apps/*/supabase
 # .claude, will be available eventually 
 .claude/
 
@@ -56,3 +57,5 @@ supabase/.temp/
 
 # IDE
 .vscode
+# Playwright
+apps/web/test-results/

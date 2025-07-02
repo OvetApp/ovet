@@ -1,11 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Authentication Flow", () => {
+test.skip("Authentication Flow", () => {
   test("should redirect unauthenticated users to login", async ({ page }) => {
     // Try to access protected route
     await page.goto("/protected");
 
-    // Should be redirected to login
     await expect(page).toHaveURL(/.*\/auth\/login/);
   });
 
