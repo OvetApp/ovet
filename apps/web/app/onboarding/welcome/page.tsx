@@ -1,3 +1,3 @@
-export default function BillingPage() {
-  return <div>TODO</div>;
+export default function WelcomePage() {
+  return <div>onboarding/welcome/, WelcomePage</div>;
 }

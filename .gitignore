@@ -57,3 +57,5 @@ supabase/.temp/
 
 # IDE
 .vscode
+# Playwright
+apps/web/test-results/
