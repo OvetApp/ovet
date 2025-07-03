@@ -120,7 +120,7 @@ Authentication flow: middleware checks user → redirects unauthenticated users 
 **Prerequisites:**
 
 - Node.js ≥20
-- pnpm 10.4.1 (specified in packageManager)
+- pnpm 10.12.4 (specified in packageManager)
 - Git for version control
 
 **First-time Setup:**
