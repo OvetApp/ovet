@@ -23,6 +23,11 @@
     "typecheck": {
       "dependsOn": ["^build", "^typecheck"]
     },
+    "test:e2e": {
+      "dependsOn": ["^build"],
+      "outputs": ["test-results/**", "playwright-report/**"],
+      "env": ["PLAYWRIGHT_BASE_URL", "PLAYWRIGHT_TEST_TIMEOUT", "PLAYWRIGHT_WORKERS"]
+    },
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,
