@@ -142,6 +142,15 @@ NEXT_PUBLIC_SUPABASE_URL="your-supabase-url"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
 ```
 
+**Playwright Testing Configuration:**
+Optional environment variables for E2E testing:
+
+```bash
+PLAYWRIGHT_BASE_URL="http://localhost:3000"    # Base URL for tests
+PLAYWRIGHT_TEST_TIMEOUT="30000"                # Test timeout in ms
+PLAYWRIGHT_WORKERS="1"                         # Number of parallel workers
+```
+
 **Development Commands:**
 
 ```bash
