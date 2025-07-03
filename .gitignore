@@ -25,10 +25,26 @@ node_modules
 # Testing
 coverage
 
-# Playwright
-test-results/
-playwright-report/
-playwright/.auth/
+# Playwright - Turborepo monorepo patterns
+# Core Playwright generated files
+**/test-results/
+**/playwright-report/
+**/playwright/.auth/
+**/blob-report/
+**/html-report/
+
+# Playwright specific artifacts
+**/*.trace
+**/test-results/**/*.zip
+**/playwright-report/**/*.zip
+**/test-results.json
+**/.pwtest-global/
+**/global-setup-*.json
+
+# Browser downloads and artifacts
+**/downloads/
+**/videos/
+**/screenshots/
 
 # Turbo
 .turbo
@@ -51,5 +67,3 @@ npm-debug.log*
 
 # IDE
 .vscode
-# Playwright
-apps/web/test-results/
