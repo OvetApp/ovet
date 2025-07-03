@@ -16,6 +16,7 @@ apps/*/supabase
 .supabase/.branches/**
 .supabase/.temp/**
 supabase/.temp/
+supabase/**
 
 # Dependencies
 node_modules
@@ -67,3 +68,6 @@ npm-debug.log*
 
 # IDE
 .vscode
+apps/web/.env.example
+apps/web/.env.sand
+apps/web/.env.sand
