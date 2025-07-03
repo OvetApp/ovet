@@ -19,16 +19,28 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_ENV: test
+  PLAYWRIGHT_BASE_URL: http://localhost:3000
+  PLAYWRIGHT_TEST_TIMEOUT: 30000
+  PLAYWRIGHT_WORKERS: 1
+
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ github.token }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -41,11 +53,31 @@ jobs:
         with:
           version: 10.12.4
 
+      - name: Setup Environment
+        run: |
+          echo "Node version: $(node --version)"
+          echo "pnpm version: $(pnpm --version)"
+          echo "Playwright Base URL: ${{ env.PLAYWRIGHT_BASE_URL }}"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
       - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm dlx playwright install --with-deps chromium firefox
+
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: pnpm dlx playwright install-deps
 
       - name: Build applications
         run: pnpm build
@@ -53,8 +85,6 @@ jobs:
       - name: Run E2E tests
         run: pnpm test:e2e
         env:
-          PLAYWRIGHT_BASE_URL: http://localhost:3000
-          PLAYWRIGHT_WORKERS: 1
           # Add Supabase test configuration if needed
           # NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_TEST_URL }}
           # NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_TEST_ANON_KEY }}
@@ -63,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ github.run_id }}
           path: apps/web/playwright-report/
           retention-days: 15
 
@@ -71,7 +101,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: playwright-traces
+          name: playwright-traces-${{ github.run_id }}
           path: apps/web/test-results/
           retention-days: 15
 
