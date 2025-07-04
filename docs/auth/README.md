@@ -16,11 +16,11 @@ This document outlines the enhanced authentication system architecture for the O
 ### Existing Structure
 
 ```
-/auth
+/(auth)
 ├── /login                    # Sign in page
 ├── /sign-up                  # Registration page
 ├── /forgot-password          # Password reset request
-├── /update-password          # Password reset form
+├── /update-password          # Password update once logged in 
 ├── /sign-up-success         # Post-registration confirmation
 ├── /error                   # Auth error handling
 └── /confirm                 # Email confirmation handler
@@ -37,34 +37,6 @@ This document outlines the enhanced authentication system architecture for the O
 
 ## Proposed Enhanced Architecture
 
-### Route Structure
-
-```
-/auth
-├── /login                    # Sign in page
-├── /signup                   # Registration page
-├── /forgot-password          # Password reset request
-├── /reset-password           # Password reset form (from email)
-├── /verify-email            # Email verification page
-├── /logout                  # Logout action
-└── /error                   # Auth error handling
-
-/dashboard                   # Main authenticated area
-├── /                        # Dashboard home
-├── /profile                 # User profile management
-├── /settings               # Account settings
-└── /billing                # Subscription/billing (if needed)
-
-/onboarding                 # Post-signup flow
-├── /welcome                # Welcome message
-├── /profile-setup          # Complete profile
-└── /preferences            # Set initial preferences
-
-/api/auth                   # Auth API routes
-├── /callback               # OAuth callbacks
-├── /signout               # Logout endpoint
-└── /refresh               # Token refresh
-```
 
 ## Authentication Flow
 
