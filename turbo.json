@@ -26,7 +26,11 @@
     "test:e2e": {
       "dependsOn": ["^build"],
       "outputs": ["test-results/**", "playwright-report/**"],
-      "env": ["PLAYWRIGHT_BASE_URL", "PLAYWRIGHT_TEST_TIMEOUT", "PLAYWRIGHT_WORKERS"]
+      "env": [
+        "PLAYWRIGHT_BASE_URL",
+        "PLAYWRIGHT_TEST_TIMEOUT",
+        "PLAYWRIGHT_WORKERS"
+      ]
     },
     "dev": {
       "dependsOn": ["^build"],

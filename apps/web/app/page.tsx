@@ -1,31 +1,22 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { Button } from "@workspace/ui/components/button";
 
-async function logoutAction() {
-  "use server";
+export default async function HomePage() {
   const supabase = await createClient();
-  await supabase.auth.signOut();
-  redirect("/auth/login");
-}
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-export default async function LogoutPage() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getUser();
-  const email = data?.user?.email ?? null;
+  // Redirect authenticated users to protected page
+  if (user) {
+    redirect("/protected");
+  }
 
+  // Show landing page for unauthenticated users
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="flex flex-col items-center space-y-4">
-        {email ? (
-          <p className="text-sm text-muted-foreground">Signed in as {email}</p>
-        ) : (
-          <p className="text-sm text-muted-foreground">Not signed in</p>
-        )}
-        <form action={logoutAction}>
-          <Button type="submit">Logout</Button>
-        </form>
-      </div>
+    <div className="flex min-h-[calc(100vh-4rem)] w-full flex-col items-center justify-center">
+      <h1 className="text-4xl font-bold">Welcome to Ovet</h1>
+      <p className="mt-4 text-lg text-muted-foreground">Please sign in to continue</p>
     </div>
   );
 }
