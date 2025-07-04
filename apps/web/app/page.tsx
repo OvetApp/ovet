@@ -7,26 +7,16 @@ export default async function HomePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Redirect unauthenticated users to login
-  if (!user) {
-    redirect("/auth/login");
+  // Redirect authenticated users to protected page
+  if (user) {
+    redirect("/protected");
   }
 
-  // Get user profile data to check if onboarding is complete
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("first_name, phone_number")
-    .eq("id", user.id)
-    .single();
-
-  // Check if user has completed onboarding (has first_name AND phone_number)
-  const hasFirstName = profile?.first_name && profile.first_name.trim() !== "";
-  const hasPhoneNumber = profile?.phone_number && profile.phone_number.trim() !== "";
-
-  if (!hasFirstName || !hasPhoneNumber) {
-    redirect("/onboarding");
-  }
-
-  // User is authenticated and has completed onboarding
-  redirect("/dashboard");
+  // Show landing page for unauthenticated users
+  return (
+    <div className="flex min-h-[calc(100vh-4rem)] w-full flex-col items-center justify-center">
+      <h1 className="text-4xl font-bold">Welcome to Ovet</h1>
+      <p className="mt-4 text-lg text-muted-foreground">Please sign in to continue</p>
+    </div>
+  );
 }
