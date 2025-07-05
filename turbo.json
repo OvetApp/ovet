@@ -3,8 +3,13 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*"
+      ],
+      "dependsOn": [
+        "^build"
+      ],
       "outputs": [
         "build/**",
         ".vercel/**",
@@ -14,18 +19,31 @@
       ]
     },
     "test": {
-      "outputs": ["coverage/**"],
+      "outputs": [
+        "coverage/**"
+      ],
       "dependsOn": []
     },
     "lint": {
-      "dependsOn": ["^build", "^lint"]
+      "dependsOn": [
+        "^build",
+        "^lint"
+      ]
     },
     "typecheck": {
-      "dependsOn": ["^build", "^typecheck"]
+      "dependsOn": [
+        "^build",
+        "^typecheck"
+      ]
     },
     "test:e2e": {
-      "dependsOn": ["^build"],
-      "outputs": ["test-results/**", "playwright-report/**"],
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "test-results/**",
+        "playwright-report/**"
+      ],
       "env": [
         "PLAYWRIGHT_BASE_URL",
         "PLAYWRIGHT_TEST_TIMEOUT",
@@ -33,7 +51,9 @@
       ]
     },
     "dev": {
-      "dependsOn": ["^build"],
+      "dependsOn": [
+        "^build"
+      ],
       "cache": false,
       "persistent": true
     }
