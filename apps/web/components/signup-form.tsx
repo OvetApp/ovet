@@ -149,7 +149,7 @@ export function SignUpForm({
         return;
       }
 
-      router.push("/auth/sign-up-success");
+      router.push("/auth/signup-success");
     } catch (error: unknown) {
       console.error("Sign up error:", error);
       setError("Network error. Please check your connection and try again.");
